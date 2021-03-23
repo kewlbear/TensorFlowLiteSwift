@@ -18,7 +18,7 @@ jobs:
     - id: date
       run: echo "::set-output name=version::0.0.1-nightly.$(date -v -1d +%Y%m%d)"
     - name: DRY
-      run: "! git tag | grep ${{ steps.date.outputs.version }}"
+      run: "git tag | grep ${{ steps.date.outputs.version }}; test $? -ne 0"
     - run: sh Scripts/pod.sh ${{ steps.date.outputs.version }}
     - name: Update sources
       run: sh Scripts/all.sh
@@ -39,7 +39,7 @@ jobs:
     - id: pod
       run: sh Scripts/pod.sh
     - name: DRY
-      run: "! git tag | grep ${{ steps.pod.outputs.version }}"
+      run: "git tag | grep ${{ steps.pod.outputs.version }}; test $? -ne 0"
     - name: Update sources
       run: sh Scripts/all.sh
     - name: Commit
