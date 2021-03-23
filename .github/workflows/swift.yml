@@ -1,0 +1,49 @@
+name: Check for update
+
+on:
+  schedule:
+    - cron: "12 */3 * * *"
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  nightly:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - id: date
+      run: echo "::set-output name=version::0.0.1-nightly.$(date -v -1d +%Y%m%d)"
+    - name: DRY
+      run: ! git tag | grep ${{ steps.date.outputs.version }}
+    - run: sh Scripts/pod.sh ${{ steps.date.outputs.version }}
+    - name: Update sources
+      run: sh Scripts/all.sh
+    - name: Commit
+      uses: EndBug/add-and-commit@v7
+      with:
+        add: 'Sources'
+        message: "add ${{ steps.date.outputs.version }}"
+        tag: "${{ steps.date.outputs.version }}"
+
+  release:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - id: pod
+      run: sh Scripts/pod.sh
+    - name: DRY
+      run: ! git tag | grep ${{ steps.pod.outputs.version }}
+    - name: Update sources
+      run: sh Scripts/all.sh
+    - name: Commit
+      uses: EndBug/add-and-commit@v7
+      with:
+        add: 'Package.swift'
+        message: "add ${{ steps.pod.outputs.version }}"
+        tag: "${{ steps.pod.outputs.version }}"
