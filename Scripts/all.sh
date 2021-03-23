@@ -1,3 +1,3 @@
 rm -rf Sources/TensorFlowLite/*
 
-cp -r Example/Pods/TensorFlowLiteSwift/* Sources/TensorFlowLite
+cp -R Example/Pods/TensorFlowLiteSwift/* Sources/TensorFlowLite
