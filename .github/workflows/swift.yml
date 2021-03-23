@@ -28,7 +28,7 @@ jobs:
         add: 'Sources'
         message: "add ${{ steps.date.outputs.version }}"
     - run: git tag "${{ steps.date.outputs.version }}"
-    - run: git push
+    - run: git push --tags
 
   release:
 
@@ -48,4 +48,4 @@ jobs:
         add: 'Package.swift'
         message: "add ${{ steps.pod.outputs.version }}"
     - run: git tag "${{ steps.pod.outputs.version }}"
-    - run: git push
+    - run: git push --tags
