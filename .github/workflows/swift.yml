@@ -21,7 +21,7 @@ jobs:
       run: "! git tag | grep ${{ steps.date.outputs.version }}"
     - run: sh Scripts/pod.sh ${{ steps.date.outputs.version }}
     - name: Update sources
-      run: sh Scripts/all.sh
+      run: rm -rf Sources/TensorFlowLite/*; cp -R Example/Pods/TensorFlowLiteSwift/* Sources/TensorFlowLite
     - name: Commit
       uses: EndBug/add-and-commit@v7
       with:
