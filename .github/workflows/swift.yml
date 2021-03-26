@@ -18,9 +18,7 @@ jobs:
     - id: date
       run: echo "::set-output name=version::0.0.1-nightly.$(date -v -1d +%Y%m%d)"
     - name: DRY
-      run: |
-        git tag | grep ${{ steps.date.outputs.version }}
-        test $? -ne 0
+      run: test -z "$(git tag | grep ${{ steps.date.outputs.version }})"
     - run: sh Scripts/pod.sh ${{ steps.date.outputs.version }}
     - name: Update sources
       run: sh Scripts/all.sh
