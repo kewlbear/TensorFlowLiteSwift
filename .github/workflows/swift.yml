@@ -39,7 +39,7 @@ jobs:
     - id: pod
       run: sh Scripts/pod.sh
     - name: DRY
-      run: "git tag | grep ${{ steps.pod.outputs.version }}; test $? -ne 0"
+      run: test -z "$(git tag | grep ${{ steps.pod.outputs.version }})"
     - name: Update sources
       run: sh Scripts/all.sh
     - name: Commit
