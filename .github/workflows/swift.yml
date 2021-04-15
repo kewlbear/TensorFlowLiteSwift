@@ -26,7 +26,10 @@ jobs:
       with:
         add: 'Sources'
         message: "add ${{ steps.pod.outputs.version }}"
-        tag: "${{ steps.pod.outputs.version }}"
+    - if: ${{ steps.pod.outputs.version }}
+      run: |
+        git tag "${{ steps.pod.outputs.version }}"
+        git push --tags
 
   release:
 
