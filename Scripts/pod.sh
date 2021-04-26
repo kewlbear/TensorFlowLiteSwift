@@ -13,7 +13,7 @@ else
   sed s/VERSION/", '~> $N'"/g Podfile.in > Podfile
 fi
 
-pod install
+pod install || exit
 
 if [ "$V" = "" ]
 then

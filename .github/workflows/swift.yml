@@ -2,7 +2,7 @@ name: Check for update
 
 on:
   schedule:
-    - cron: "12 */3 * * *"
+    - cron: "43 2 * * *"
   push:
     branches: [ master ]
   pull_request:
