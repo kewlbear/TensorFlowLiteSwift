@@ -50,4 +50,6 @@ jobs:
       with:
         add: 'Package.swift'
         message: "add ${{ steps.pod.outputs.version }}"
-        tag: "${{ steps.pod.outputs.version }} --force"
+    - run: |
+      git tag "${{ steps.pod.outputs.version }}"
+      git push --tags
