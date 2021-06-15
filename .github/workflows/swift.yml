@@ -51,6 +51,7 @@ jobs:
         add: 'Package.swift'
         message: "add ${{ steps.pod.outputs.version }}"
     - name: Tag
+      if: ${{ steps.pod.outputs.version }}
       run: |
         git tag "${{ steps.pod.outputs.version }}"
         git push --tags
